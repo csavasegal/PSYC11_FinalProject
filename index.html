@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <!-- <script src="jspsych-7.1.0/jspsych/dist/jspsych.js"></script>
+    
+   
+    <link rel="stylesheet" href="jspsych-7.1.0/jspsych/dist/jspsych.css" />
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-preload.js"></script>
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-video-keyboard-response.js"></script>
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-html-button-response.js"></script>
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-initialize-microphone.js"></script>
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-html-audio-response.js"></script>
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-survey-text.js"></script>
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-survey-html-form.js"></script>
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-instructions.js"></script>
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-survey-multi-choice.js"></script>
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-survey-likert.js"></script>
+     <script src="jspsych-7.1.0/jspsych/dist/plugin-html-keyboard-response.js"></script> -->
+
+     <script src="jspsych-6.3.0/jspsych.js" type="text/javascript"></script>
+     <script src="jspsych-6.3.0/plugins/jspsych-video-keyboard-response.js" type="text/javascript"></script>
+     <script src="jspsych-6.3.0/plugins/jspsych-video-button-response.js" type="text/javascript"></script>
+
+     <script src="jspsych-6.3.0/plugins/jspsych-survey-multi-choice.js" type="text/javascript"></script>
+     <script src="jspsych-6.3.0/plugins/jspsych-survey-text.js" type="text/javascript"></script>
+     <script src="jspsych-6.3.0/plugins/jspsych-survey-likert.js" type="text/javascript"></script>
+     <script src="jspsych-6.3.0/plugins/jspsych-instructions.js" type="text/javascript"></script>
+     <script src="jspsych-6.3.0/plugins/jspsych-preload.js" type="text/javascript"></script>
+
+     <link href="jspsych-6.3.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+     <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'></script>
+
+     <script src="movie_op_trim.js"></script>
+    <script src="questions_trim.js"></script>
+    <style>
+    .jspsych-btn {margin-bottom: 10px;}
+  </style>
+</head>
+<body></body>
+
+<script>
+
+var movies = movies
+var participant = jsPsych.data.getURLVariable('participant');
+var participant = Number(participant)
+
+
+
+var preload = {
+    type: 'preload',
+    auto_preload: true 
+}
+
+//////////////////////// Defining functions and trials and randomizing movie order
+
+function shuffleArray(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
+
+//shuffle
+movies = shuffleArray(movies)
+ console.log("movies:" + movies[0] + "," + movies[1] + "," + movies[2])
+
+
+
+///////// Instructions here: 
+var movie_instructions = {
+    type: "instructions",
+    pages: [
+    '<h2>During this section, you will watch a video. Please make sure that you are paying attention to what emotions you think this video depicts.</h2>'
+  ],
+    show_clickable_nav: true
+}
+
+
+var experiment_starting = {
+  type: "instructions",
+    pages: [
+    
+    'Please turn your volume up and make sure that you are in a quiet space where you can watch a video.'],
+    show_clickable_nav: true
+}    
+var welcome = {
+    type: "instructions",
+    pages: [
+    '<h1> Welcome! Thank you for taking the time to take this survey. Please answer as honestly as you feel comfortable as your responses will remain anonymous.</h1>'
+  ],
+    show_clickable_nav: true
+}
+var ty = {
+    type: "instructions",
+    pages: [
+    `<p>THANK YOU!! Complete this separate survey to WIN $40 (in your choice of cash or gift card) The surveys are separate to protect your anonymity</p>
+    <p><a href="https://forms.gle/rEt2tUW41Es8y3cp7">Click here</a>.</p>`,
+  ],
+    show_clickable_nav: true
+}
+
+var dep_questions = {
+  type: "instructions",
+    pages: [
+    
+    'You will now answer a series of questions.'],
+    show_clickable_nav: true
+} 
+
+
+
+var depression_trial = {
+  type: "survey-multi-choice",
+  questions: [
+    {
+      prompt: "Over the last 2 weeks how often have you have little interest or pleasure in doing things?  (0 - not at all, 1 - several days, 2 - more than half the days, 3 - nearly everyday)", 
+      name: 'Q1', 
+      options: ['0','1','2','3'], 
+      required: true,
+      horizontal: false,
+    }, 
+    {
+      prompt: "Over the last 2 weeks how often have you feel down, depressed, or hopeless?  (0 - not at all, 1 - several days, 2 - more than half the days, 3 - nearly everyday)", 
+      name: 'Q2', 
+      options: ['0','1','2','3'], 
+      required: true,
+      horizontal: false,
+    }, 
+    {
+      prompt: "Over the last 2 weeks how often have you had trouble falling asleep, staying asleep, or sleeping too much?  (0 - not at all, 1 - several days, 2 - more than half the days, 3 - nearly everyday)", 
+      name: 'Q3', 
+      options: ['0','1','2','3'], 
+      required: true,
+      horizontal: false
+    }, 
+        {
+      prompt: "Over the last 2 weeks how often have you felt tired or had little energy?  (0 - not at all, 1 - several days, 2 - more than half the days, 3 - nearly everyday)", 
+      name: 'Q4', 
+      options: ['0','1','2','3'], 
+      required: true,
+      horizontal: false
+    }, 
+    {
+      prompt: "Over the last 2 weeks how often have you had a poor appetite or overate?  (0 - not at all, 1 - several days, 2 - more than half the days, 3 - nearly everyday)", 
+      name: 'Q5', 
+      options: ['0','1','2','3'], 
+      required: true,
+      horizontal: false
+    }, 
+    {
+      prompt: "Over the last 2 weeks how often have you felt bad about yourself or felt like you were failing, letting yourself down, or letting your family down?  (0 - not at all, 1 - several days, 2 - more than half the days, 3 - nearly everyday)", 
+      name: 'Q6', 
+      options: ['0','1','2','3'], 
+      required: true,
+      horizontal: false
+    }, 
+    {
+      prompt: "Over the last 2 weeks how often have you had trouble concentrating on things, such as reading the newspaper or watching television?  (0 - not at all, 1 - several days, 2 - more than half the days, 3 - nearly everyday)", 
+      name: 'Q7', 
+      options: ['0','1','2','3'], 
+      required: true,
+      horizontal: false
+    }, 
+    {
+      prompt: "Over the last 2 weeks how often have you moved or spoken so slowly that other people could have noticed. Or the opposite - have you been so restless that you have been moving around a lot more than usual?  (0 - not at all, 1 - several days, 2 - more than half the days, 3 - nearly everyday)", 
+      name: 'Q8', 
+      options: ['0','1','2','3'], 
+      required: true,
+      horizontal: false
+    }, 
+  ],
+};
+
+
+var demographic_trial = {
+  type: "survey-multi-choice",
+  questions: [
+  {
+      prompt: "<strong> What class year are you? </strong>", 
+      name: 'year', 
+      options: ['25','24','23','22','N/A'], 
+      required: true,
+      horizontal: true
+    },
+  ],
+};
+var demo_gender = {
+  type: "survey-text",
+  questions: [
+    {prompt: 'If you wish to elaborate on your gender identification, please do so below', name:'gender_detail'}
+  ],
+  on_finish:function(data){save_data_csv()}
+}
+var demo_age = {
+  type: "survey-text",
+  questions: [
+    {prompt: 'How old are you (in numerical years example: 17)?',name:'age',required:true}
+  ]
+}
+var demo_gender_MC = {
+  type: "survey-multi-choice",
+  questions: [
+    {
+      prompt: "<strong> How would you describe your gender? </strong>", 
+      name: 'gender', 
+      options: ['male', 'female', 'non-binary', 'other', 'do not wish to report'], 
+      required: true,
+      horizontal: true
+    }, 
+  ],
+};
+
+
+
+
+
+var trial_1 = {
+  type: 'video-keyboard-response',
+  stimulus: 
+  [movies[0]],
+  choices: jsPsych.NO_KEYS,
+  trial_ends_after_video: true
+};
+
+var trial_2 = {
+  type: 'video-keyboard-response',
+  stimulus: [movies[1]],
+  choices: jsPsych.NO_KEYS,
+  trial_ends_after_video: true
+};
+  
+var trial_3 = {
+  type: 'video-keyboard-response',
+  stimulus: 
+  [movies[2]],
+  choices: jsPsych.NO_KEYS,
+  trial_ends_after_video: true
+};
+
+
+var arou_scale = [
+  "Very calm", 
+  "Somewhat calm", 
+  "Slightly calm", 
+  "Neutral", 
+  "Slightly exciting",
+  "Somewhat exciting",
+  "Very exciting"
+];
+
+
+var arousal = {
+  type: "survey-likert",
+  questions: [
+  {prompt: "What was the overall <strong> intensity </strong>of the previous video, on a scale from calm to exciting? Note that \'intensity\' here is independent of valence -- it\'s simply the intensity of the emotions depicted, regardless of whether they were positive or negative.", name: 'arousal', labels: arou_scale, required: true}],
+}
+
+var vale_scale = [
+"Very negative", 
+  "Somewhat negative", 
+  "Slightly negative", 
+  "Neither positive or negative", 
+  "Slightly positive",
+  "Somewhat positive",
+  "Very positive"
+]
+
+var valence = {
+	type: "survey-likert",
+	questions: [{prompt: 'What was the overall <strong> valence </strong> of the previous video, on a scale from <strong> positive to negative </strong>? \'Positive\' here might mean happy or comforting, while \'negative\' might mean sad or angry.', name:'valence', labels: vale_scale, required: true}]
+}
+
+var engag_scale = [
+ "Extremely unengaging", 
+ "Somewhat unengaging",
+  "Slightly unengaging", 
+  "Neutral", 
+  "Slightly engaging",
+	"Somewhat engaging", 
+	"Extremely engaging"
+]
+
+var engagement= {
+  type: "survey-likert",
+  questions: [
+  {prompt: "How <strong> engaging </strong> did you find this video?", name: 'engagement', labels: engag_scale, required: true}],
+}
+
+
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+timeline=[]
+
+
+var participant = jsPsych.data.getURLVariable('participant');
+timeline.push(preload)
+timeline.push(welcome)
+
+
+
+timeline.push( experiment_starting, movie_instructions)
+
+timeline.push(trial_1)
+
+timeline.push(arousal, valence)
+
+timeline.push(movie_instructions, trial_2)
+
+timeline.push(arousal, valence)
+
+timeline.push(movie_instructions, trial_3)
+
+timeline.push(arousal, valence)
+
+timeline.push(dep_questions,depression_trial)
+
+
+timeline.push(demographic_trial, demo_age, demo_gender_MC, demo_gender,ty)
+
+var date = new Date().toISOString().slice(0, 10)
+const d = new Date();
+let time = d.getTime();
+
+jsPsych.init({
+
+show_progress_bar: true,
+timeline: timeline,
+//experiment_structure: procedure_list,
+on_finish: function(){
+
+  //jsPsych.data.displayData();
+  //saveData("_data",jsPsych.data.get().csv());
+
+  save_data_csv();
+}});
+var save_url = "https://rcweb.dartmouth.edu/homes/f004p59/PSYC11FinalProject/write_data.php";
+
+function save_data_csv() {
+        jQuery.ajax({
+            type: 'post',
+            cache: false,
+            url: save_url,
+            
+            data: {
+                data_dir: "data",
+                file_name: 'PSYCH11FinalProject'+ participant + '_' +date+ '_' + time+'.csv', // the file type should be added
+                exp_data: jsPsych.data.get().csv()
+            }
+        });
+    }
+
+//     </script>
+// </html>
+
+

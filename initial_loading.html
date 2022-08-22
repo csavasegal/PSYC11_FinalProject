@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+<title>My experiment</title>
+<script src="jspsych-6.1.0/jspsych.js" type="text/javascript"></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'></script>
+<script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js" type="text/javascript"></script>
+
+<link href="jspsych-6.1.0/css/jspsych_updated.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<script>
+
+timeline_temp = []
+var goodbye2 = {
+    type: "html-keyboard-response", //jsPsychHtmlKeyboardResponse,
+    stimulus: `<p><a href="https://rcweb.dartmouth.edu/homes/f004p59/PSYC11FinalProject/participant_id_allocator.php">Click here to start the experiment</a>.</p>`,
+
+    };
+    timeline_temp.push(goodbye2);
+
+////////////////////////////// SAVING ////////////////////////////
+jsPsych.data.getInteractionData()
+
+jsPsych.init({
+
+timeline: timeline_temp,
+//experiment_structure: procedure_list,
+});
+
+</script>
+</body>
+</html>
